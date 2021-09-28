@@ -2,6 +2,7 @@ const router = require("express").Router();
 const { User } = require("../../Models");
 
 router.post("/", (req, res) => {
+  console.log("signup information", req.body);
   User.create({
     username: req.body.username,
     password: req.body.password,
@@ -19,15 +20,16 @@ router.post("/", (req, res) => {
       res.status(500).json(err);
     });
 });
-
+// /api/user/login
 router.post("/login", (req, res) => {
-  console.log(req.body);
+  console.log("login information", req.body);
   User.findOne({
     where: {
       username: req.body.username,
     },
   }).then((dbUserData) => {
     if (!dbUserData) {
+      console.log("bad username");
       res
         .status(400)
         .json({ message: "Please enter a valid username and password" });
@@ -37,6 +39,7 @@ router.post("/login", (req, res) => {
     const validPassword = dbUserData.checkPassword(req.body.password);
 
     if (!validPassword) {
+      console.log("bad password");
       res
         .status(400)
         .json({ message: "Please enter a valid username and password" });
