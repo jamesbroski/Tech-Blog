@@ -7,7 +7,7 @@ router.get("/", (req, res) => {
   })
     .then((dbPostData) => {
       const posts = dbPostData.map((post) => post.get({ plain: true }));
-      res.render("all-posts", { posts });
+      res.render("allPosts", { posts });
     })
     .catch((err) => {
       res.status(500).json(err);
@@ -27,7 +27,7 @@ router.get("/post/:id", (req, res) => {
     .then((dbPostData) => {
       if (dbPostData) {
         const post = dbPostData.get({ plain: true });
-        res.render("single-post", { post });
+        res.render("singlePost", { post });
       } else {
         res.status(400).end();
       }
